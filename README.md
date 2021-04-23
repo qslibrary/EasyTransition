@@ -15,7 +15,7 @@ App Gradle
 
 ```css
 dependencies {
-		implementation 'com.github.qslibrary:EasyTransition:1.0.3'
+	implementation 'com.github.qslibrary:EasyTransition:1.0.3'
 }
 ```
 
