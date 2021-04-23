@@ -14,18 +14,7 @@ class TestActivity : AppCompatActivity() {
     }
 
     private fun initView() {
+        tvTest.text=intent.getStringExtra("name")
         ivTest.setImageResource(R.mipmap.ic_launcher)
-        val id = window.attributes.windowAnimations
-//        ivTest.postDelayed({
-//            window.setWindowAnimations(id)
-//        }, 1000)
-//        LogUtil.i("id:${id}")
-//        ivTest.scaleX=2f
-
-//        ivTest.scaleX=2f
-//        ivTest.postDelayed({
-//            ivTest.setImageResource(R.mipmap.ic_launcher)
-//            ET.releaseLazy(this,ivTest)
-//        },1000)
     }
 }

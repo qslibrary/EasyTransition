@@ -23,7 +23,9 @@ class MainActivity : AppCompatActivity() {
     private fun initView() {
         tvTest.setOnClickListener {
             ET.from(tvTest).to(R.id.tvTest)
-            startActivity(Intent(this, TestActivity::class.java))
+            val intent=Intent(this, TestActivity::class.java);
+            intent.putExtra("name",tvTest.text.toString())
+            startActivity(intent)
         }
         ivTest.setOnClickListener {
             ET.from(ivTest).to(R.id.ivTest)

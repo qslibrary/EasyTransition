@@ -50,7 +50,8 @@ public class TextViewUtils {
     }
 
     public static int getContentWidth(ValueMap values) {
-        return values.getInt(WIDTH) - values.getInt(PADDING_LEFT) - values.getInt(PADDING_RIGHT);
+        return (int)values.getFloat(TEXT_WIDTH);
+//        return values.getInt(WIDTH) - values.getInt(PADDING_LEFT) - values.getInt(PADDING_RIGHT);
     }
 
     public static int getContentHeight(ValueMap values) {
