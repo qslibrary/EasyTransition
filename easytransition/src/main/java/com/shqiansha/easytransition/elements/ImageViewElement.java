@@ -16,13 +16,18 @@ public class ImageViewElement extends ViewElement<ImageView> {
     public void onSaveViewValues(ValueMap values, ImageView view) {
         super.onSaveViewValues(values, view);
         values.put(IMAGE_MATRIX, view.getImageMatrix());
-        values.put(DRAWABLE, view.getDrawable());
     }
 
     @Override
-    public ImageView onCreateTransitionView(ValueMap values, FrameLayout viewGroup) {
+    public void onSaveViewSharedValues(ValueMap sharedValues, ImageView view) {
+        super.onSaveViewSharedValues(sharedValues, view);
+        sharedValues.put(DRAWABLE, view.getDrawable());
+    }
+
+    @Override
+    public ImageView onCreateTransitionView(ValueMap values, ValueMap sharedValues, FrameLayout viewGroup) {
         ImageView imageView = new ImageView(viewGroup.getContext());
-        imageView.setImageDrawable(values.get(DRAWABLE, Drawable.class));
+        imageView.setImageDrawable(sharedValues.get(DRAWABLE, Drawable.class));
         imageView.setImageMatrix(values.get(IMAGE_MATRIX, Matrix.class));
         Matrix matrix = values.get(MATRIX, Matrix.class);
         imageView.setPivotX(0);

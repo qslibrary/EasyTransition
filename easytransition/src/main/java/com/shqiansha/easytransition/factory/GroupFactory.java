@@ -50,10 +50,12 @@ public class GroupFactory {
         group.getFrom().setElement(ElementFactory.createElement(clzElement));
         group.getFrom().setActivity(ActivityUtils.getLast());
         group.getFrom().saveValues(params.fromView);
+        group.getFrom().saveSharedValues(params.fromView);
     }
 
     private void addTo(Group group, Class clzElement, Group.Params params) {
         group.getTo().setElement(ElementFactory.createElement(clzElement));
+        group.getTo().saveSharedValues(params.fromView);
         if (params.toLazy) {
             group.getTo().setActivity(params.toActivity);
             group.getTo().setLazy(true);

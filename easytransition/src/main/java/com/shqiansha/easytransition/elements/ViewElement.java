@@ -36,5 +36,13 @@ public abstract class ViewElement<T extends View> implements Element<T> {
 
     }
 
+    @Override
+    public void onSaveViewSharedValues(ValueMap sharedValues, T view) {
 
+    }
+
+    @Override
+    public void onDestroyTransitionView(T view) {
+
+    }
 }

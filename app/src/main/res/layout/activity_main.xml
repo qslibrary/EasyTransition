@@ -7,7 +7,7 @@
     tools:context=".MainActivity"
     android:orientation="vertical">
 
-    <EditText
+    <TextView
         android:id="@+id/tvTest"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -24,10 +24,23 @@ public interface Element<T extends View> {
     void onSaveViewValues(ValueMap values, T view);
 
     /**
+     * save common values between fromView and toView, it will be invoked only in fromView
+     * @param sharedValues cache map
+     * @param view         original view
+     */
+    void onSaveViewSharedValues(ValueMap sharedValues, T view);
+
+    /**
      * @param values    cache map
      * @param viewGroup parent
      * @return
      */
-    T onCreateTransitionView(ValueMap values, FrameLayout viewGroup);
+    T onCreateTransitionView(ValueMap values, ValueMap sharedValues, FrameLayout viewGroup);
+
+    /**
+     * @param view transition view
+     */
+    void onDestroyTransitionView(T view);
+
 
 }

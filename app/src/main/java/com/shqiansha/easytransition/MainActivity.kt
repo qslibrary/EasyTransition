@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, TestActivity::class.java))
         }
         ivTest.setOnClickListener {
-//            ET.from(ivTest).to(R.id.ivTest)
+            ET.from(ivTest).to(R.id.ivTest)
             startActivity(Intent(this, TestActivity::class.java))
         }
         ivTran.setOnClickListener {

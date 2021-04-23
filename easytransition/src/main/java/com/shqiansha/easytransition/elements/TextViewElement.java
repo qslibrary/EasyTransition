@@ -39,7 +39,7 @@ public class TextViewElement extends ViewElement<TextView> {
     }
 
     @Override
-    public TextView onCreateTransitionView(ValueMap values, FrameLayout viewGroup) {
+    public TextView onCreateTransitionView(ValueMap values,ValueMap sharedValues ,FrameLayout viewGroup) {
         TextView textView = new TextView(viewGroup.getContext());
         textView.setTextSize(values.getFloat(TEXT_SIZE));
         textView.setText(values.getString(TEXT_VALUE));
