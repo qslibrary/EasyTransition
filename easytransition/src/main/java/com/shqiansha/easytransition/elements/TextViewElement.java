@@ -24,7 +24,7 @@ public class TextViewElement extends ViewElement<TextView> {
         values.put(TEXT_SIZE, UnitUtils.toSp(view.getContext(), view.getTextSize()));
         values.put(TEXT_COLOR, view.getCurrentTextColor());
         values.put(TEXT_TYPEFACE, view.getTypeface());
-        values.put(TEXT_VALUE, view.getText());
+        values.put(TEXT_VALUE, view.getText().toString());
 
         values.put(GRAVITY, view.getGravity());
 

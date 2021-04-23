@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initView() {
         tvTest.setOnClickListener {
-            ET.from(tvTest).duration(200).disableBack().to(R.id.tvTest)
+            ET.from(tvTest).disableBack().to(R.id.tvTest)
             startActivity(Intent(this, TestActivity::class.java))
         }
         ivTest.setOnClickListener {
