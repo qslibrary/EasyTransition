@@ -4,10 +4,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.shqiansha.easytransition.MappingData;
+import com.shqiansha.easytransition.config.MappingData;
 import com.shqiansha.easytransition.core.Element;
 import com.shqiansha.easytransition.core.Transition;
-import com.shqiansha.easytransition.entity.Group;
+import com.shqiansha.easytransition.core.Group;
 import com.shqiansha.easytransition.transitions.CommonViewTransition;
 import com.shqiansha.easytransition.transitions.ImageViewTransition;
 import com.shqiansha.easytransition.transitions.TextViewTransition;
@@ -66,6 +66,7 @@ public class GroupFactory {
         group.addGoTransition(TransitionFactory.createDefaultTransition(params.fromView));
         group.addBackTransition(TransitionFactory.createDefaultTransition(params.fromView));
         group.setTransitionDuration(params.duration);
+        group.setBackTransition(params.backTransition);
     }
 
     static class ElementFactory {

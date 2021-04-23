@@ -16,19 +16,23 @@ public abstract class ViewElement<T extends View> implements Element<T> {
     public static final String WIDTH = "width";
     public static final String HEIGHT = "height";
 
+    public static final String MATRIX = "matrix";
+
     @Override
     public void onSaveViewValues(ValueMap values, T view) {
-        values.put(PADDING_LEFT,view.getPaddingLeft());
-        values.put(PADDING_RIGHT,view.getPaddingRight());
-        values.put(PADDING_TOP,view.getPaddingTop());
-        values.put(PADDING_BOTTOM,view.getPaddingBottom());
+        values.put(PADDING_LEFT, view.getPaddingLeft());
+        values.put(PADDING_RIGHT, view.getPaddingRight());
+        values.put(PADDING_TOP, view.getPaddingTop());
+        values.put(PADDING_BOTTOM, view.getPaddingBottom());
 
         int[] position = new int[2];
         view.getLocationOnScreen(position);
-        values.put(RAW_X,position[0]);
-        values.put(RAW_Y,position[1]);
-        values.put(WIDTH,view.getMeasuredWidth());
-        values.put(HEIGHT,view.getMeasuredHeight());
+        values.put(RAW_X, position[0]);
+        values.put(RAW_Y, position[1]);
+        values.put(WIDTH, view.getMeasuredWidth());
+        values.put(HEIGHT, view.getMeasuredHeight());
+
+        values.put(MATRIX, view.getMatrix());
 
     }
 

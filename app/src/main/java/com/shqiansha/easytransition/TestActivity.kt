@@ -12,10 +12,20 @@ class TestActivity : AppCompatActivity() {
         setContentView(R.layout.activity_test)
         initView()
     }
-    private fun initView(){
-        ivTest.postDelayed({
-            ivTest.setImageResource(R.mipmap.ic_launcher)
-            ET.releaseLazy(this,ivTest)
-        },1000)
+
+    private fun initView() {
+        ivTest.setImageResource(R.mipmap.ic_launcher)
+        val id = window.attributes.windowAnimations
+//        ivTest.postDelayed({
+//            window.setWindowAnimations(id)
+//        }, 1000)
+//        LogUtil.i("id:${id}")
+//        ivTest.scaleX=2f
+
+//        ivTest.scaleX=2f
+//        ivTest.postDelayed({
+//            ivTest.setImageResource(R.mipmap.ic_launcher)
+//            ET.releaseLazy(this,ivTest)
+//        },1000)
     }
 }

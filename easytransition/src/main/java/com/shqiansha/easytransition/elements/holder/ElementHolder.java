@@ -1,4 +1,4 @@
-package com.shqiansha.easytransition.entity;
+package com.shqiansha.easytransition.elements.holder;
 
 import android.app.Activity;
 import android.view.View;
@@ -7,6 +7,7 @@ import android.widget.FrameLayout;
 import androidx.annotation.IdRes;
 import androidx.annotation.Nullable;
 
+import com.shqiansha.easytransition.entity.ValueMap;
 import com.shqiansha.easytransition.utils.ActivityUtils;
 import com.shqiansha.easytransition.core.Element;
 

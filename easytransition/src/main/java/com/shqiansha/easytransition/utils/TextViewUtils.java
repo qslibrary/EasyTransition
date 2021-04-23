@@ -1,6 +1,8 @@
 package com.shqiansha.easytransition.utils;
 
 import android.view.Gravity;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import com.shqiansha.easytransition.elements.TextViewElement;
 import com.shqiansha.easytransition.entity.ValueMap;
@@ -58,7 +60,16 @@ public class TextViewUtils {
     public static float getTextSize(ValueMap values) {
         return values.getFloat(TextViewElement.TEXT_SIZE);
     }
+
     public static int getTextColor(ValueMap values) {
         return values.getInt(TextViewElement.TEXT_COLOR);
+    }
+
+    public static FrameLayout.LayoutParams generateParams(ValueMap values) {
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.leftMargin = TextViewUtils.getContentLeftMargin(values);
+        params.topMargin = TextViewUtils.getContentTopMargin(values);
+        return params;
     }
 }

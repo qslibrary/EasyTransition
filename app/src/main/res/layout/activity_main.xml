@@ -25,4 +25,32 @@
         android:src="@mipmap/ic_launcher"
         />
 
+    <TextView
+        android:id="@+id/ivTran"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:background="@color/colorPrimary"
+        android:text="改变"
+        />
+
+    <TextView
+        android:id="@+id/ivRestore"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="还原"
+        android:background="@color/colorPrimary"
+        />
+    <TextView
+        android:id="@+id/ivState"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="获取状态"
+        android:background="@color/colorPrimary"
+        />
+
+
+
 </LinearLayout>

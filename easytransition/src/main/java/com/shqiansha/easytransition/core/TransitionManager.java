@@ -1,4 +1,4 @@
-package com.shqiansha.easytransition;
+package com.shqiansha.easytransition.core;
 
 import android.app.Activity;
 import android.app.Application;
@@ -11,9 +11,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.shqiansha.easytransition.config.MappingData;
 import com.shqiansha.easytransition.elements.ImageViewElement;
 import com.shqiansha.easytransition.elements.TextViewElement;
-import com.shqiansha.easytransition.entity.Group;
 import com.shqiansha.easytransition.utils.ActivityUtils;
 import com.shqiansha.easytransition.utils.StringUtils;
 
@@ -65,9 +65,9 @@ public class TransitionManager {
 
             @Override
             public void onActivityPaused(@NonNull Activity activity) {
-                if(activity.isFinishing()){
+                if (activity.isFinishing()) {
                     for (Group group : groups) {
-                        if(group.isTargetActivity(activity)&&group.isAnimating()){
+                        if (group.isTargetActivity(activity) && group.isAnimating()) {
                             group.cancelAnimations();
                         }
                     }
@@ -118,6 +118,7 @@ public class TransitionManager {
 
     /**
      * perform transition including go and back
+     *
      * @param matchedGroups
      * @param activity
      */
@@ -131,6 +132,7 @@ public class TransitionManager {
 
     /**
      * execute animations lazily
+     *
      * @param activity
      * @param view
      */
@@ -138,9 +140,9 @@ public class TransitionManager {
         List<Group> matched = getMatchedGroups(activity);
         if (matched.size() > 0) {
             for (Group group : matched) {
-                if(group.isWaitingToAnim()) {
+                if (group.isWaitingToAnim()) {
                     group.getTo().saveValues(view);
-                    group.startGoTransition((FrameLayout) activity.getWindow().getDecorView(), view);
+                    group.startGoTransition(activity.getWindow(), view);
                 }
             }
         }
@@ -148,6 +150,7 @@ public class TransitionManager {
 
     /**
      * add group,it will skip if exist
+     *
      * @param group
      */
     public void addGroup(Group group) {

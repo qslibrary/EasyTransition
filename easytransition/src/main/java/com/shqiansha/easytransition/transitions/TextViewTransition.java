@@ -3,12 +3,9 @@ package com.shqiansha.easytransition.transitions;
 import android.animation.Animator;
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
-import android.view.View;
 import android.widget.TextView;
 
 import com.shqiansha.easytransition.core.Transition;
-import com.shqiansha.easytransition.elements.TextViewElement;
-import com.shqiansha.easytransition.entity.ElementHolder;
 import com.shqiansha.easytransition.entity.ValueMap;
 import com.shqiansha.easytransition.utils.TextViewUtils;
 

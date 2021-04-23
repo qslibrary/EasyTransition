@@ -1,7 +1,6 @@
 package com.shqiansha.easytransition.elements;
 
 import android.graphics.Typeface;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -24,7 +23,7 @@ public class TextViewElement extends ViewElement<TextView> {
         super.onSaveViewValues(values, view);
         values.put(TEXT_SIZE, UnitUtils.toSp(view.getContext(), view.getTextSize()));
         values.put(TEXT_COLOR, view.getCurrentTextColor());
-        values.put(TEXT_TYPEFACE,view.getTypeface());
+        values.put(TEXT_TYPEFACE, view.getTypeface());
         values.put(TEXT_VALUE, view.getText());
 
         values.put(GRAVITY, view.getGravity());
@@ -32,12 +31,11 @@ public class TextViewElement extends ViewElement<TextView> {
         values.put(TEXT_HEIGHT, view.getPaint().getFontMetrics().bottom - view.getPaint().getFontMetrics().top);
         values.put(TEXT_WIDTH, view.getPaint().measureText(view.getText().toString()));
 
-        //适配TextView的drawable
-        values.put(PADDING_LEFT,view.getTotalPaddingLeft());
-        values.put(PADDING_RIGHT,view.getTotalPaddingRight());
-        values.put(PADDING_BOTTOM,view.getTotalPaddingBottom());
-        values.put(PADDING_TOP,view.getTotalPaddingTop());
-
+        //adjust TextView drawable
+        values.put(PADDING_LEFT, view.getTotalPaddingLeft());
+        values.put(PADDING_RIGHT, view.getTotalPaddingRight());
+        values.put(PADDING_BOTTOM, view.getTotalPaddingBottom());
+        values.put(PADDING_TOP, view.getTotalPaddingTop());
     }
 
     @Override
@@ -48,17 +46,7 @@ public class TextViewElement extends ViewElement<TextView> {
         textView.setTextColor(values.getInt(TEXT_COLOR));
         textView.setTypeface(values.get(TEXT_TYPEFACE, Typeface.class));
         textView.setTextColor(values.getInt(TEXT_COLOR));
-//        textView.setBackgroundColor(Color.BLUE);
-//        viewGroup.addView(textView);
-        viewGroup.addView(textView, getLayoutParam(values, textView));
+        viewGroup.addView(textView, TextViewUtils.generateParams(values));
         return textView;
-    }
-
-    public FrameLayout.LayoutParams getLayoutParam(ValueMap values, TextView view) {
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.leftMargin = TextViewUtils.getContentLeftMargin(values);
-        params.topMargin = TextViewUtils.getContentTopMargin(values);
-        return params;
-
     }
 }
