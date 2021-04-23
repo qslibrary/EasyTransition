@@ -86,7 +86,7 @@ public class TransitionManager {
 
             @Override
             public void onActivityDestroyed(@NonNull Activity activity) {
-                ActivityUtils.pop();
+                ActivityUtils.pop(activity);
                 for (int i = groups.size() - 1; i >= 0; i--) {
                     if (groups.get(i).getFrom().isActivityEqual(activity)) groups.remove(i);
                 }

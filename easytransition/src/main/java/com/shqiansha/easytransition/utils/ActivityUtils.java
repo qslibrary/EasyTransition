@@ -26,8 +26,14 @@ public class ActivityUtils {
         activities.add(activity.getClass().getName());
     }
 
-    public static void pop() {
-        if (activities.size() > 0) activities.remove(activities.size() - 1);
+    public static void pop(Activity activity) {
+        String name=getName(activity);
+        for(int i=activities.size()-1;i>=0;i--){
+            if(activities.get(i).equals(name)){
+                activities.remove(i);
+                break;
+            }
+        }
     }
 
     public static void clear() {
