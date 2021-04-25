@@ -21,7 +21,7 @@ allprojects {
 }
 ```
 
-App Gradle
+Gradle
 
 ```css
 dependencies {
