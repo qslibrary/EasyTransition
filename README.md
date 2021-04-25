@@ -1,6 +1,10 @@
 # Demo
 
+###### ImageView
+
 <img src="https://github.com/qslibrary/EasyTransition/blob/main/show/imageview.gif"/>
+
+###### TextView
 
 <img src="https://github.com/qslibrary/EasyTransition/blob/main/show/textview.gif"/>
 
