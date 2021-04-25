@@ -1,8 +1,8 @@
 # Demo
 
-<img src="https://github.com/qslibrary/EasyTransition/blob/main/show/imageview.gif" style="zoom: 40%" />
+<img src="https://github.com/qslibrary/EasyTransition/blob/main/show/imageview.gif"/>
 
-<img src="https://github.com/qslibrary/EasyTransition/blob/main/show/textview.gif" style="zoom: 40%" />
+<img src="https://github.com/qslibrary/EasyTransition/blob/main/show/textview.gif"/>
 
 # Download
 
