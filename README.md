@@ -1,12 +1,8 @@
 # Demo
 
-<video id="video" controls="" preload="none">
-    <source id="mp4" src="https://github.com/qslibrary/EasyTransition/blob/main/show/video_imageview.mp4" type="video/mp4">
-</video>
+<img src="https://github.com/qslibrary/EasyTransition/blob/main/show/imageview.gif" style="zoom: 100%" />
 
-<video id="video" controls="" preload="none">
-    <source id="mp4" src="https://github.com/qslibrary/EasyTransition/blob/main/show/video_textview.mp4" type="video/mp4">
-</video>
+<img src="https://github.com/qslibrary/EasyTransition/blob/main/show/imageview.gif" style="zoom: 100%" />
 
 # Download
 
