@@ -1,16 +1,10 @@
 package com.shqiansha.easytransition.factory;
 
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.shqiansha.easytransition.config.MappingData;
 import com.shqiansha.easytransition.core.Element;
-import com.shqiansha.easytransition.core.Transition;
 import com.shqiansha.easytransition.core.Group;
-import com.shqiansha.easytransition.transitions.CommonViewTransition;
-import com.shqiansha.easytransition.transitions.ImageViewTransition;
-import com.shqiansha.easytransition.transitions.TextViewTransition;
 import com.shqiansha.easytransition.utils.ActivityUtils;
 
 import org.jetbrains.annotations.NotNull;
@@ -65,10 +59,11 @@ public class GroupFactory {
     }
 
     private void addTransition(Group group, Group.Params params) {
-        group.addGoTransition(TransitionFactory.createDefaultTransition(params.fromView));
-        group.addBackTransition(TransitionFactory.createDefaultTransition(params.fromView));
+        group.setGoTransitions(params.goTransitions);
+        group.setBackTransitions(params.backTransitions);
         group.setTransitionDuration(params.duration);
-        group.setBackTransition(params.backTransition);
+        group.setBackTransition(params.back);
+        group.updateViewValues(params.fromView, true);
     }
 
     static class ElementFactory {
@@ -79,18 +74,6 @@ public class GroupFactory {
                 e.printStackTrace();
             }
             return null;
-        }
-    }
-
-    static class TransitionFactory {
-        static Transition createDefaultTransition(View view) {
-            if (view instanceof TextView) {
-                return new TextViewTransition();
-            } else if (view instanceof ImageView) {
-                return new ImageViewTransition();
-            } else {
-                return new CommonViewTransition();
-            }
         }
     }
 }

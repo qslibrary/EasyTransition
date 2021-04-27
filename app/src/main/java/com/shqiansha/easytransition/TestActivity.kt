@@ -14,7 +14,11 @@ class TestActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        tvTest.text=intent.getStringExtra("name")
+        tvTest.postDelayed({
+            tvTest.text=intent.getStringExtra("name")
+            ET.releaseLazy(this,tvTest)
+        },1000)
         ivTest.setImageResource(R.mipmap.ic_launcher)
+
     }
 }

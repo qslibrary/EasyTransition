@@ -3,12 +3,16 @@ package com.shqiansha.easytransition.core;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.app.Activity;
+import android.transition.Transition;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.FrameLayout;
 
 import com.shqiansha.easytransition.elements.holder.ElementHolder;
+import com.shqiansha.easytransition.transitions.holder.TransitionHolder;
 import com.shqiansha.easytransition.utils.ActivityUtils;
+import com.shqiansha.easytransition.utils.TagUtils;
 import com.shqiansha.easytransition.utils.ViewUtils;
 
 import java.util.ArrayList;
@@ -29,8 +33,11 @@ public class Group<T extends View> {
     private ElementHolder<T> mFrom = new ElementHolder<>();
     private ElementHolder<T> mTo = new ElementHolder<>();
 
-    private List<Transition<T>> mGoTransitions = new ArrayList<>();
-    private List<Transition<T>> mBackTransitions = new ArrayList<>();
+//    private List<Transition> mGoTransitions = new ArrayList<>();
+//    private List<Transition> mBackTransitions = new ArrayList<>();
+
+    private List<TransitionHolder> mGo = new ArrayList<>();
+    private List<TransitionHolder> mBack = new ArrayList<>();
     private AnimatorSet mSet;
 
     private long mTransitionDuration = 0;
@@ -68,9 +75,8 @@ public class Group<T extends View> {
         if (view.getParent() == null) {
             decor.addView(view, ViewUtils.generateParams(mFrom.getValues()));
         }
-        String tag = System.currentTimeMillis() + "";
-        view.setTag(tag);
-        mTransitionViewTag = tag;
+        mTransitionViewTag = TagUtils.generateTag();
+        view.setTag(mTransitionViewTag);
 
         mState = STATE_WAITING_TO_ANIM;
         if (!mTo.isLazy()) {
@@ -84,35 +90,29 @@ public class Group<T extends View> {
         toView.post(new Runnable() {
             @Override
             public void run() {
-                mTo.saveValues(toView);
+                updateViewValues(toView, false);
                 playGoAnimations(view, window);
             }
         });
     }
 
-    public void executeBack(Activity activity) {
-        if (mBackTransition) {
-            Window window = activity.getWindow();
-            FrameLayout decor = (FrameLayout) window.getDecorView();
-            hideContent(decor);
-            final T view = mTo.getTransitionView(decor);
-            if (view.getParent() == null) {
-                decor.addView(view, ViewUtils.generateParams(mTo.getValues()));
-            }
-            final T fromView = decor.findViewById(mFrom.getId());
-            fromView.post(new Runnable() {
-                @Override
-                public void run() {
-                    playBackAnimations(view);
-                }
-            });
+    public void updateViewValues(T v, boolean from) {
+        if (from) {
+            mFrom.saveValues(v);
+            for (TransitionHolder holder : mGo) holder.captureStartViewValues(v);
+            for (TransitionHolder holder : mBack) holder.captureEndViewValues(v);
+        } else {
+            mTo.saveValues(v);
+            for (TransitionHolder holder : mGo) holder.captureEndViewValues(v);
+            for (TransitionHolder holder : mBack) holder.captureStartViewValues(v);
+
         }
     }
 
     private void playGoAnimations(final T view, final Window window) {
         List<Animator> animations = new ArrayList<>();
-        for (Transition<T> tran : mGoTransitions) {
-            animations.addAll(tran.onCreate(mFrom.getValues(), mTo.getValues(), view));
+        for (TransitionHolder holder : mGo) {
+            animations.add(holder.getAnimator((ViewGroup) window.getDecorView(),mTransitionViewTag,true));
         }
         AnimatorSet set = new AnimatorSet();
         set.playTogether(animations);
@@ -126,7 +126,8 @@ public class Group<T extends View> {
             @Override
             public void onAnimationEnd(Animator animation) {
                 if (mState == STATE_ANIMATING) {
-                    FrameLayout decor = (FrameLayout) view.getParent();
+                    TagUtils.remove(mTransitionViewTag);
+                    FrameLayout decor = (FrameLayout) window.getDecorView();
                     decor.removeView(view);
                     showContent(decor);
                     mBehavior = BEHAVIOR_BACK;
@@ -138,7 +139,8 @@ public class Group<T extends View> {
 
             @Override
             public void onAnimationCancel(Animator animation) {
-                mTo.saveValues(view);
+                updateViewValues(view,false);
+//                mTo.saveValues(view);
                 mBehavior = BEHAVIOR_BACK;
                 mState = STATE_NONE;
             }
@@ -152,10 +154,31 @@ public class Group<T extends View> {
         mSet = set;
     }
 
+    public void executeBack(Activity activity) {
+        if (mBackTransition) {
+            Window window = activity.getWindow();
+            FrameLayout decor = (FrameLayout) window.getDecorView();
+            hideContent(decor);
+            final T view = mTo.getTransitionView(decor);
+            if (view.getParent() == null) {
+                decor.addView(view, ViewUtils.generateParams(mTo.getValues()));
+            }
+            mTransitionViewTag = TagUtils.generateTag();
+            view.setTag(mTransitionViewTag);
+            final T fromView = decor.findViewById(mFrom.getId());
+            fromView.post(new Runnable() {
+                @Override
+                public void run() {
+                    playBackAnimations(view);
+                }
+            });
+        }
+    }
+
     private void playBackAnimations(final T view) {
         List<Animator> animations = new ArrayList<>();
-        for (Transition<T> tran : mBackTransitions) {
-            animations.addAll(tran.onCreate(mTo.getValues(), mFrom.getValues(), view));
+        for (TransitionHolder holder : mBack) {
+            animations.add(holder.getAnimator((ViewGroup) view.getParent(),mTransitionViewTag,false));
         }
         AnimatorSet set = new AnimatorSet();
         set.playTogether(animations);
@@ -169,6 +192,7 @@ public class Group<T extends View> {
             @Override
             public void onAnimationEnd(Animator animation) {
                 if (mState == STATE_ANIMATING) {
+                    TagUtils.remove(mTransitionViewTag);
                     FrameLayout decor = (FrameLayout) view.getParent();
                     decor.removeView(view);
                     showContent(decor);
@@ -211,6 +235,8 @@ public class Group<T extends View> {
             View view = decor.getChildAt(i);
             //过滤statusBarBackground
             if (view.getId() == android.R.id.statusBarBackground) break;
+            if (view.getTag() != null && view.getTag().toString().startsWith(TagUtils.TAG_START))
+                break;
 
             decor.getChildAt(i).setVisibility(View.INVISIBLE);
         }
@@ -238,12 +264,22 @@ public class Group<T extends View> {
         return mBehavior == BEHAVIOR_BACK;
     }
 
-    public void addGoTransition(Transition<T> transition) {
-        mGoTransitions.add(transition);
+    public void addGoTransition(Transition transition) {
+        mGo.add(new TransitionHolder(transition));
     }
 
-    public void addBackTransition(Transition<T> transition) {
-        mBackTransitions.add(transition);
+    public void addBackTransition(Transition transition) {
+        mBack.add(new TransitionHolder(transition));
+    }
+
+    public void setGoTransitions(List<Transition> transitions) {
+        mGo.clear();
+        for (Transition tran : transitions) addGoTransition(tran);
+    }
+
+    public void setBackTransitions(List<Transition> transitions) {
+        mBack.clear();
+        for (Transition tran : transitions) addBackTransition(tran);
     }
 
     public void setTransitionDuration(long mTransitionDuration) {
@@ -278,7 +314,9 @@ public class Group<T extends View> {
         public String toActivity;
         public boolean toLazy;
         public long duration = 500;
-        public boolean backTransition = true;
+        public boolean back = true;
+        public List<Transition> goTransitions = new ArrayList<>();
+        public List<Transition> backTransitions = new ArrayList<>();
     }
 
 }

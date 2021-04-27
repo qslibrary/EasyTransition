@@ -1,12 +1,16 @@
 package com.shqiansha.easytransition;
 
 import android.app.Activity;
+import android.transition.Transition;
 import android.view.View;
 
 import com.shqiansha.easytransition.core.Group;
 import com.shqiansha.easytransition.factory.GroupFactory;
 import com.shqiansha.easytransition.core.TransitionManager;
+import com.shqiansha.easytransition.factory.TransitionFactory;
 import com.shqiansha.easytransition.utils.ActivityUtils;
+
+import java.util.List;
 
 public class Builder {
 
@@ -15,6 +19,8 @@ public class Builder {
     Builder(View view) {
         p = new Group.Params();
         p.fromView = view;
+        p.goTransitions = TransitionFactory.createDefaultTransition(view);
+        p.backTransitions = TransitionFactory.createDefaultTransition(view);
     }
 
     /**
@@ -30,10 +36,43 @@ public class Builder {
 
     /**
      * disable back transition
+     *
      * @return
      */
     public Builder disableBack() {
-        p.backTransition = false;
+        p.back = false;
+        return this;
+    }
+
+    public Builder addGoTransition(Transition transition) {
+        p.goTransitions.add(transition);
+        return this;
+    }
+
+    public Builder addBackTransition(Transition transition) {
+        p.backTransitions.add(transition);
+        return this;
+    }
+
+    public Builder replaceGoTransitions(List<Transition> transitions) {
+        p.goTransitions = transitions;
+        return this;
+    }
+
+    public Builder replaceGoTransition(Transition transition) {
+        p.goTransitions.clear();
+        p.goTransitions.add(transition);
+        return this;
+    }
+
+    public Builder replaceBackTransition(Transition transition) {
+        p.backTransitions.clear();
+        p.backTransitions.add(transition);
+        return this;
+    }
+
+    public Builder replaceBackTransitions(List<Transition> transitions) {
+        p.backTransitions = transitions;
         return this;
     }
 

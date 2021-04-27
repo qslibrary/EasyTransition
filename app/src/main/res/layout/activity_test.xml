@@ -9,8 +9,9 @@
         android:text="18380446443"
         android:transitionName="element"
         android:textSize="14sp"
-        android:textColor="#000000"
+        android:textColor="@color/colorPrimary"
         android:layout_marginStart="200dp"
+        android:background="@color/colorAccent"
         />
     <ImageView
         android:id="@+id/ivTest"

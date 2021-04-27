@@ -40,7 +40,8 @@ public class ElementHolder<T extends View> {
     }
 
     public int getId() {
-        return (int) mValues.get(KEY_ID);
+        Integer id=mValues.get(KEY_ID,Integer.class);
+        return id==null?0:id;
     }
 
     public void setId(@IdRes int id) {
